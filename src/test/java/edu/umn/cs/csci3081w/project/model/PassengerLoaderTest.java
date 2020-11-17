@@ -1,12 +1,12 @@
 package edu.umn.cs.csci3081w.project.model;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class PassengerLoaderTest {
   /**
@@ -24,12 +24,12 @@ public class PassengerLoaderTest {
    * Testing loading a passenger.
    */
   @Test
-  public void testLoadPassenger(){
-    PassengerLoader pLoader = new PassengerLoader();
+  public void testLoadPassenger() {
+    PassengerLoader passengerLoader = new PassengerLoader();
     Passenger p1 = PassengerFactory.generate(0, 10);
-    List<Passenger> pList = new ArrayList<Passenger>();
-    assertTrue(pLoader.loadPassenger(p1, 1, pList));
+    List<Passenger> passengerList = new ArrayList<Passenger>();
+    assertTrue(passengerLoader.loadPassenger(p1, 1, passengerList));
     Passenger p2 = PassengerFactory.generate(0, 10);
-    assertFalse(pLoader.loadPassenger(p1, 1, pList));
+    assertFalse(passengerLoader.loadPassenger(p1, 1, passengerList));
   }
 }

@@ -1,9 +1,9 @@
 package edu.umn.cs.csci3081w.project.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BusDataTest {
   /**
@@ -21,7 +21,7 @@ public class BusDataTest {
    * Testing state after using constructor.
    */
   @Test
-  public void testConstructorNormal(){
+  public void testConstructorNormal() {
     String id = "test";
     Position pos = new Position(0.0, 1.0);
     int numPassengers = 0;

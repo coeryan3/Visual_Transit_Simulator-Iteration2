@@ -1,9 +1,9 @@
 package edu.umn.cs.csci3081w.project.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RouteDataTest {
   /**
@@ -21,7 +21,7 @@ public class RouteDataTest {
    * Test that RouteData constructor works normally.
    */
   @Test
-  public void testConstructorNormal(){
+  public void testConstructorNormal() {
     RouteData routeData = new RouteData();
     assertEquals("", routeData.getId());
     assertEquals(0, routeData.getStops().size());

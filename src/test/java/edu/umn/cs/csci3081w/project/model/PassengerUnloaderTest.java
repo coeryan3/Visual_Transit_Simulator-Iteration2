@@ -1,12 +1,11 @@
 package edu.umn.cs.csci3081w.project.model;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class PassengerUnloaderTest {
   /**
@@ -24,16 +23,16 @@ public class PassengerUnloaderTest {
    * Testing unloading a passenger.
    */
   @Test
-  public void testUnloadPassengers(){
+  public void testUnloadPassengers() {
     PassengerUnloader unloader = new PassengerUnloader();
-    List<Passenger> pList = new ArrayList<Passenger>();
+    List<Passenger> passengerList = new ArrayList<Passenger>();
     Passenger p1 = PassengerFactory.generate(0, 10);
     Passenger p2 = PassengerFactory.generate(0, 10);
     Passenger p3 = PassengerFactory.generate(0, 10);
-    pList.add(p1);
-    pList.add(p2);
-    pList.add(p3);
-    Stop stop = new Stop(0,0,0);
-    assertEquals(3, unloader.unloadPassengers(pList, stop));
+    passengerList.add(p1);
+    passengerList.add(p2);
+    passengerList.add(p3);
+    Stop stop = new Stop(2, 0, 0);
+    assertEquals(1, unloader.unloadPassengers(passengerList, stop));
   }
 }

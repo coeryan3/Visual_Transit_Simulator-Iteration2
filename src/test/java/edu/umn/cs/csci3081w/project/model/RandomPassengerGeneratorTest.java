@@ -1,12 +1,11 @@
 package edu.umn.cs.csci3081w.project.model;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 
 public class RandomPassengerGeneratorTest {
   /**
@@ -24,7 +23,7 @@ public class RandomPassengerGeneratorTest {
    * Tests that generatePassengers generates a reasonable amount of passengers.
    */
   @Test
-  public void testGeneratePassengers(){
+  public void testGeneratePassengers() {
     List<Double> l = new ArrayList<Double>();
     List<Stop> stops = new ArrayList<Stop>();
     Stop stop1 = new Stop(0, 44.972392, -93.243774);

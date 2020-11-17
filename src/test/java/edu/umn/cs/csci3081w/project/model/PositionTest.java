@@ -1,9 +1,9 @@
 package edu.umn.cs.csci3081w.project.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PositionTest {
   /**
@@ -21,7 +21,7 @@ public class PositionTest {
    * Testing state after using constructor.
    */
   @Test
-  public void testConstructorNormal(){
+  public void testConstructorNormal() {
     double x = 1.0;
     double y = 2.0;
     Position position = new Position(x, y);

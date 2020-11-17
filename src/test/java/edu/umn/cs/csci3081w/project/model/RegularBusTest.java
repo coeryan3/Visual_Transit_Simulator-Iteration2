@@ -1,12 +1,11 @@
 package edu.umn.cs.csci3081w.project.model;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class RegularBusTest {
   /**
@@ -24,7 +23,7 @@ public class RegularBusTest {
    * Testing state after using constructor.
    */
   @Test
-  public void testConstructorNormal(){
+  public void testConstructorNormal() {
     String name = "test";
     Stop stop1 = new Stop(0, 44.972392, -93.243774);
     Stop stop2 = new Stop(1, 44.973580, -93.235071);
