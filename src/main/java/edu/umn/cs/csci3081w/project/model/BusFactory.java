@@ -22,7 +22,7 @@ public class BusFactory {
    * @param outbound outbound route for the bus to follow
    * @param inbound inbound route for the bus to follow
    * @param speed speed of the bus
-   * @return
+   * @return returns a SmallBus
    */
   public Bus getSmallBus(String name, Route outbound, Route inbound, double speed) {
     return new SmallBus(name, outbound, inbound, speed);
@@ -34,7 +34,7 @@ public class BusFactory {
    * @param outbound outbound route for the bus to follow
    * @param inbound inbound route for the bus to follow
    * @param speed speed of the bus
-   * @return
+   * @return returns a SmallBus, a RegularBus, or a LargeBus at random
    */
   public Bus getRandomBus(String name, Route outbound, Route inbound, double speed) {
     int type = rand.nextInt(3);
@@ -54,7 +54,7 @@ public class BusFactory {
    * @param outbound outbound route for the bus to follow
    * @param inbound inbound route for the bus to follow
    * @param speed speed of the bus
-   * @return
+   * @return alternates between returning a SmallBus and a RegularBus
    */
   public Bus getStrategy1Bus(String name, Route outbound, Route inbound, double speed) {
     if (this.state1 == 0) {
@@ -73,7 +73,7 @@ public class BusFactory {
    * @param outbound outbound route for the bus to follow
    * @param inbound inbound route for the bus to follow
    * @param speed speed of the bus
-   * @return
+   * @return alternates between returning a RegularBus and a LargeBus
    */
   public Bus getStrategy2Bus(String name, Route outbound, Route inbound, double speed) {
     if (this.state2 == 0) {
@@ -93,7 +93,7 @@ public class BusFactory {
    * @param outbound outbound route for the bus to follow
    * @param inbound inbound route for the bus to follow
    * @param speed speed of the bus
-   * @return
+   * @return alternates between returning a SmallBus, a RegularBus, and a LargeBus
    */
   public Bus getStrategy3Bus(String name, Route outbound, Route inbound, double speed) {
     if (this.state3 == 0) {
