@@ -29,30 +29,6 @@ public class BusFactory {
   }
 
   /**
-   * Creates a regular bus.
-   * @param name name of bus
-   * @param outbound outbound route for the bus to follow
-   * @param inbound inbound route for the bus to follow
-   * @param speed speed of the bus
-   * @return
-   */
-  public Bus getRegularBus(String name, Route outbound, Route inbound, double speed) {
-    return new RegularBus(name, outbound, inbound, speed);
-  }
-
-  /**
-   * Creates a large bus.
-   * @param name name of bus
-   * @param outbound outbound route for the bus to follow
-   * @param inbound inbound route for the bus to follow
-   * @param speed speed of the bus
-   * @return
-   */
-  public Bus getLargeBus(String name, Route outbound, Route inbound, double speed) {
-    return new LargeBus(name, outbound, inbound, speed);
-  }
-
-  /**
    * Creates a bus according the random type.
    * @param name name of bus
    * @param outbound outbound route for the bus to follow
@@ -63,11 +39,11 @@ public class BusFactory {
   public Bus getRandomBus(String name, Route outbound, Route inbound, double speed) {
     int type = rand.nextInt(3);
     if (type == 0) {
-      getSmallBus(name, outbound, inbound, speed);
+      return new SmallBus(name, outbound, inbound, speed);
     } else if (type == 1) {
-      getRegularBus(name, outbound, inbound, speed);
+      return new RegularBus(name, outbound, inbound, speed);
     } else if (type == 2) {
-      getLargeBus(name, outbound, inbound, speed);
+      return new LargeBus(name, outbound, inbound, speed);
     }
     return null;
   }
@@ -83,10 +59,10 @@ public class BusFactory {
   public Bus getStrategy1Bus(String name, Route outbound, Route inbound, double speed) {
     if (this.state1 == 0) {
       this.state1 = 1;
-      getSmallBus(name, outbound, inbound, speed);
+      return new SmallBus(name, outbound, inbound, speed);
     } else if (this.state1 == 1) {
       this.state1 = 0;
-      getRegularBus(name, outbound, inbound, speed);
+      return new RegularBus(name, outbound, inbound, speed);
     }
     return null;
   }
@@ -102,10 +78,10 @@ public class BusFactory {
   public Bus getStrategy2Bus(String name, Route outbound, Route inbound, double speed) {
     if (this.state2 == 0) {
       this.state2 = 1;
-      getRegularBus(name, outbound, inbound, speed);
+      return new RegularBus(name, outbound, inbound, speed);
     } else if (this.state2 == 1) {
       this.state2 = 0;
-      getLargeBus(name, outbound, inbound, speed);
+      return new LargeBus(name, outbound, inbound, speed);
     }
     return null;
   }
@@ -122,13 +98,13 @@ public class BusFactory {
   public Bus getStrategy3Bus(String name, Route outbound, Route inbound, double speed) {
     if (this.state3 == 0) {
       this.state3 = 1;
-      getSmallBus(name, outbound, inbound, speed);
+      return new SmallBus(name, outbound, inbound, speed);
     } else if (this.state3 == 1) {
       this.state3 = 2;
-      getRegularBus(name, outbound, inbound, speed);
+      return new RegularBus(name, outbound, inbound, speed);
     } else if (this.state3 == 2) {
       this.state3 = 0;
-      getLargeBus(name, outbound, inbound, speed);
+      return new LargeBus(name, outbound, inbound, speed);
     }
     return null;
   }
