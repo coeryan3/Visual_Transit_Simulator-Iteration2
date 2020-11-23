@@ -41,7 +41,6 @@ public class VisualizationSimulator {
     this.prototypeRoutes = new ArrayList<Route>();
     this.busses = new ArrayList<Bus>();
     this.timeSinceLastBus = new ArrayList<Integer>();
-    this.busFactory = new BusFactory();
   }
 
   /**
@@ -50,6 +49,7 @@ public class VisualizationSimulator {
    * @param numTimeStepsParam number of time steps
    */
   public void start(List<Integer> busStartTimingsParam, int numTimeStepsParam) {
+    this.busFactory = new BusFactory();
     this.busStartTimings = busStartTimingsParam;
     this.numTimeSteps = numTimeStepsParam;
     for (int i = 0; i < busStartTimings.size(); i++) {
