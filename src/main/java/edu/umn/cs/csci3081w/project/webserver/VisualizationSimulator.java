@@ -2,9 +2,10 @@ package edu.umn.cs.csci3081w.project.webserver;
 
 import edu.umn.cs.csci3081w.project.model.Bus;
 import edu.umn.cs.csci3081w.project.model.BusFactory;
+import edu.umn.cs.csci3081w.project.model.RandomBusFactory;
 import edu.umn.cs.csci3081w.project.model.Route;
+import edu.umn.cs.csci3081w.project.model.TimeOfDayBusFactory;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,12 +22,7 @@ public class VisualizationSimulator {
   private int busId = 1000;
   private boolean paused = false;
   private BusFactory busFactory;
-  private LocalTime currentTime;
   private LocalDateTime currentDate;
-  private LocalTime fiveAM = LocalTime.of(5, 0);
-  private LocalTime eightAM = LocalTime.of(8, 0);
-  private LocalTime fourPM = LocalTime.of(16, 0);
-  private LocalTime ninePM = LocalTime.of(21, 0);
 
 
   /**
@@ -50,7 +46,12 @@ public class VisualizationSimulator {
    * @param numTimeStepsParam number of time steps
    */
   public void start(List<Integer> busStartTimingsParam, int numTimeStepsParam) {
-    this.busFactory = new BusFactory();
+    currentDate = LocalDateTime.now();
+    if (currentDate.getDayOfMonth() == 1 || currentDate.getDayOfMonth() == 15) {
+      this.busFactory = new RandomBusFactory();
+    } else {
+      this.busFactory = new TimeOfDayBusFactory();
+    }
     this.busStartTimings = busStartTimingsParam;
     this.numTimeSteps = numTimeStepsParam;
     for (int i = 0; i < busStartTimings.size(); i++) {
@@ -73,45 +74,7 @@ public class VisualizationSimulator {
   }
 
   /**
-   * Create bus randomly.
-   *
-   * @param name parameter for the name of the bus
-   * @param outbound parameter for outbound route
-   * @param inbound parameter for inbound route
-   * @param speed parameter for bus speed
-   * @return created bus
-   */
-  public Bus createRandomBus(String name, Route outbound, Route inbound, double speed) {
-    return busFactory.getRandomBus(name, outbound, inbound, speed);
-  }
-
-  /**
-   * Create bus using correct strategy according to the time of day.
-   *
-   * @param name parameter for the name of the bus
-   * @param outbound parameter for outbound route
-   * @param inbound parameter for inbound route
-   * @param speed parameter for bus speed
-   * @return created bus
-   */
-  public Bus createTimeOfDayBus(String name, Route outbound, Route inbound, double speed) {
-    if (currentTime.equals(fiveAM) || (currentTime.isAfter(fiveAM)
-        && currentTime.isBefore(eightAM))) {
-      return busFactory.getStrategy1Bus(name, outbound, inbound, speed);
-    } else if (currentTime.equals(eightAM) || (currentTime.isAfter(eightAM)
-        && currentTime.isBefore(fourPM))) {
-      return busFactory.getStrategy2Bus(name, outbound, inbound, speed);
-    } else if (currentTime.equals(fourPM) || (currentTime.isAfter(fourPM)
-        && currentTime.isBefore(ninePM))) {
-      return busFactory.getStrategy3Bus(name, outbound, inbound, speed);
-    } else {
-      return busFactory.getSmallBus(name, outbound, inbound, speed);
-    }
-  }
-
-  /**
-   * Create bus either randomly or using the correct time of day strategy,
-   * depending on the day of the month.
+   * Create a new bus.
    *
    * @param name parameter for the name of the bus
    * @param outbound parameter for outbound route
@@ -120,11 +83,7 @@ public class VisualizationSimulator {
    * @return created bus
    */
   public Bus createBus(String name, Route outbound, Route inbound, double speed) {
-    if (currentDate.getDayOfMonth() == 1 || currentDate.getDayOfMonth() == 15) {
-      return createRandomBus(name, outbound, inbound, speed);
-    } else {
-      return createTimeOfDayBus(name, outbound, inbound, speed);
-    }
+    return busFactory.getBus(currentDate, name, outbound, inbound, speed);
   }
 
   /**
@@ -142,7 +101,6 @@ public class VisualizationSimulator {
         if (timeSinceLastBus.get(i) <= 0) {
           Route outbound = prototypeRoutes.get(2 * i);
           Route inbound = prototypeRoutes.get(2 * i + 1);
-          currentTime = LocalTime.now();
           currentDate = LocalDateTime.now();
           busses
               .add(createBus(String.valueOf(busId),
