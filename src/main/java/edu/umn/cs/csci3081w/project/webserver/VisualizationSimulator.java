@@ -22,6 +22,7 @@ public class VisualizationSimulator {
   private int busId = 1000;
   private boolean paused = false;
   private Random rand;
+  private Observer busObserved;
 
   /**
    * Constructor for Simulation.
@@ -86,6 +87,18 @@ public class VisualizationSimulator {
     }
   }
 
+  public Observer listenBus(String id){
+    for (int i = busses.size() - 1; i >= 0; i--) {
+      if(busses.get(i).getBusData().getId().equals(id)) {
+        busObserved = new BusObserver(busses.get(i));
+      }
+    }
+    return busObserved;
+
+  }
+
+  public Observer getBusObserved(){ return busObserved; }
+
   /**
    * Updates the simulation at each step.
    */
@@ -93,8 +106,8 @@ public class VisualizationSimulator {
     if (!paused) {
       simulationTimeElapsed++;
       System.out.println("~~~~The simulation time is now"
-          + "at time step "
-          + simulationTimeElapsed + "~~~~");
+              + "at time step "
+              + simulationTimeElapsed + "~~~~");
       // Check if we need to generate new busses
       for (int i = 0; i < timeSinceLastBus.size(); i++) {
         // Check if we need to make a new bus
@@ -102,8 +115,8 @@ public class VisualizationSimulator {
           Route outbound = prototypeRoutes.get(2 * i);
           Route inbound = prototypeRoutes.get(2 * i + 1);
           busses
-              .add(createRandomBus(String.valueOf(busId),
-                  outbound.shallowCopy(), inbound.shallowCopy(), 1));
+                  .add(createRandomBus(String.valueOf(busId),
+                          outbound.shallowCopy(), inbound.shallowCopy(), 1));
           busId++;
           timeSinceLastBus.set(i, busStartTimings.get(i));
           timeSinceLastBus.set(i, timeSinceLastBus.get(i) - 1);
@@ -130,4 +143,5 @@ public class VisualizationSimulator {
       }
     }
   }
+
 }
