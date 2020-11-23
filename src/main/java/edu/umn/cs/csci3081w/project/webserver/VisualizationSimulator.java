@@ -1,10 +1,7 @@
 package edu.umn.cs.csci3081w.project.webserver;
 
-import edu.umn.cs.csci3081w.project.model.Bus;
-import edu.umn.cs.csci3081w.project.model.BusFactory;
-import edu.umn.cs.csci3081w.project.model.RandomBusFactory;
-import edu.umn.cs.csci3081w.project.model.Route;
-import edu.umn.cs.csci3081w.project.model.TimeOfDayBusFactory;
+import edu.umn.cs.csci3081w.project.model.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +18,10 @@ public class VisualizationSimulator {
   private List<Bus> busses;
   private int busId = 1000;
   private boolean paused = false;
-  private Random rand;
   private BusFactory busFactory;
   private LocalDateTime currentDate;
   private Observer busObserved;
+  private Observer stopObserved;
 
   /**
    * Constructor for Simulation.
@@ -98,6 +95,21 @@ public class VisualizationSimulator {
   }
 
   public Observer getBusObserved(){ return busObserved; }
+
+  public Observer listenStop(String id){
+    List<Stop> stops;
+    for (int i = 0; i < prototypeRoutes.size(); i++) {
+      stops = prototypeRoutes.get(i).getStops();
+      for (int j = 0; j < stops.size(); j++){
+        if(Integer.toString(stops.get(j).getId()).equals(id)) {
+          stopObserved = new StopObserver(stops.get(j));
+        }
+      }
+    }
+    return stopObserved;
+  }
+
+  public Observer getStopObserved(){ return stopObserved; }
 
   /**
    * Updates the simulation at each step.
