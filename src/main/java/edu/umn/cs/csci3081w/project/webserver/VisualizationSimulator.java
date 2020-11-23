@@ -1,13 +1,13 @@
 package edu.umn.cs.csci3081w.project.webserver;
 
 import edu.umn.cs.csci3081w.project.model.Bus;
-import edu.umn.cs.csci3081w.project.model.LargeBus;
-import edu.umn.cs.csci3081w.project.model.RegularBus;
+import edu.umn.cs.csci3081w.project.model.BusFactory;
+import edu.umn.cs.csci3081w.project.model.RandomBusFactory;
 import edu.umn.cs.csci3081w.project.model.Route;
-import edu.umn.cs.csci3081w.project.model.SmallBus;
+import edu.umn.cs.csci3081w.project.model.TimeOfDayBusFactory;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class VisualizationSimulator {
 
@@ -22,6 +22,8 @@ public class VisualizationSimulator {
   private int busId = 1000;
   private boolean paused = false;
   private Random rand;
+  private BusFactory busFactory;
+  private LocalDateTime currentDate;
   private Observer busObserved;
 
   /**
@@ -37,7 +39,6 @@ public class VisualizationSimulator {
     this.prototypeRoutes = new ArrayList<Route>();
     this.busses = new ArrayList<Bus>();
     this.timeSinceLastBus = new ArrayList<Integer>();
-    this.rand = new Random();
   }
 
   /**
@@ -46,6 +47,12 @@ public class VisualizationSimulator {
    * @param numTimeStepsParam number of time steps
    */
   public void start(List<Integer> busStartTimingsParam, int numTimeStepsParam) {
+    currentDate = LocalDateTime.now();
+    if (currentDate.getDayOfMonth() == 1 || currentDate.getDayOfMonth() == 15) {
+      this.busFactory = new RandomBusFactory();
+    } else {
+      this.busFactory = new TimeOfDayBusFactory();
+    }
     this.busStartTimings = busStartTimingsParam;
     this.numTimeSteps = numTimeStepsParam;
     for (int i = 0; i < busStartTimings.size(); i++) {
@@ -68,7 +75,7 @@ public class VisualizationSimulator {
   }
 
   /**
-   * Create bus randomly.
+   * Create a new bus.
    *
    * @param name parameter for the name of the bus
    * @param outbound parameter for outbound route
@@ -76,15 +83,8 @@ public class VisualizationSimulator {
    * @param speed parameter for bus speed
    * @return created bus
    */
-  public Bus createRandomBus(String name, Route outbound, Route inbound, double speed) {
-    int choice = rand.nextInt(3);
-    if (choice == 0) {
-      return new SmallBus(name, outbound, inbound, speed);
-    } else if (choice == 1) {
-      return new RegularBus(name, outbound, inbound, speed);
-    } else {
-      return new LargeBus(name, outbound, inbound, speed);
-    }
+  public Bus createBus(String name, Route outbound, Route inbound, double speed) {
+    return busFactory.getBus(currentDate, name, outbound, inbound, speed);
   }
 
   public Observer listenBus(String id){
@@ -106,17 +106,18 @@ public class VisualizationSimulator {
     if (!paused) {
       simulationTimeElapsed++;
       System.out.println("~~~~The simulation time is now"
-              + "at time step "
-              + simulationTimeElapsed + "~~~~");
+          + " at time step "
+          + simulationTimeElapsed + "~~~~");
       // Check if we need to generate new busses
       for (int i = 0; i < timeSinceLastBus.size(); i++) {
         // Check if we need to make a new bus
         if (timeSinceLastBus.get(i) <= 0) {
           Route outbound = prototypeRoutes.get(2 * i);
           Route inbound = prototypeRoutes.get(2 * i + 1);
+          currentDate = LocalDateTime.now();
           busses
-                  .add(createRandomBus(String.valueOf(busId),
-                          outbound.shallowCopy(), inbound.shallowCopy(), 1));
+              .add(createBus(String.valueOf(busId),
+                  outbound.shallowCopy(), inbound.shallowCopy(), 1));
           busId++;
           timeSinceLastBus.set(i, busStartTimings.get(i));
           timeSinceLastBus.set(i, timeSinceLastBus.get(i) - 1);
