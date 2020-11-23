@@ -10,11 +10,11 @@ public class ListenStopCommand extends MyWebServerCommand{
     }
 
     /**
-     * Updates the state of the simulation.
+     * Updates the display on the right side of the simulation for relevant stop.
      *
-     * @param session current simulation session
-     * @param command the update simulation command content
-     * @param state the state of the simulation session
+     * @param session current simulation session.
+     * @param command the listenStop simulation command content.
+     * @param state the state of the simulation session.
      */
 
     @Override

@@ -40,8 +40,8 @@ public class VisualizationSimulator {
 
   /**
    * Starts the simulation.
-   * @param busStartTimingsParam start timings of bus
-   * @param numTimeStepsParam number of time steps
+   * @param busStartTimingsParam start timings of bus.
+   * @param numTimeStepsParam number of time steps.
    */
   public void start(List<Integer> busStartTimingsParam, int numTimeStepsParam) {
     currentDate = LocalDateTime.now();
@@ -84,6 +84,11 @@ public class VisualizationSimulator {
     return busFactory.getBus(currentDate, name, outbound, inbound, speed);
   }
 
+  /**
+   * Find the bus associated with the given id.
+   * @param id bus id.
+   * @return the bus that is to be observed as a Observer.
+   */
   public Observer listenBus(String id){
     for (int i = busses.size() - 1; i >= 0; i--) {
       if(busses.get(i).getBusData().getId().equals(id)) {
@@ -96,6 +101,11 @@ public class VisualizationSimulator {
 
   public Observer getBusObserved(){ return busObserved; }
 
+  /**
+   * Find the stop associated with the given id.
+   * @param id stop id as a String and not an integer.
+   * @return the stop that is to be observed as a Observer.
+   */
   public Observer listenStop(String id){
     List<Stop> stops;
     for (int i = 0; i < prototypeRoutes.size(); i++) {

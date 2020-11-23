@@ -10,11 +10,11 @@ public class ListenBusCommand extends MyWebServerCommand{
     }
 
     /**
-     * Updates the state of the simulation.
+     * Updates the display on the right side of the simulation for relevant bus.
      *
-     * @param session current simulation session
-     * @param command the update simulation command content
-     * @param state the state of the simulation session
+     * @param session current simulation session.
+     * @param command the listenBus simulation command content.
+     * @param state the state of the simulation session.
      */
     @Override
     public void execute(MyWebServerSession session, JsonObject command,

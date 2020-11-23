@@ -15,6 +15,10 @@ public class BusObserver implements Observer {
         return bus.getBusData().getId();
     }
 
+    /**
+     * Gives the busObservers specific information as a string.
+     * @return a String about the busObserver's position, id, and number of passengers and capacity.
+     */
     public String getInfo(){
         String busInfo =
                 "Bus " + this.getID() + System.lineSeparator()

@@ -15,6 +15,10 @@ public class StopObserver implements Observer{
         return id;
     }
 
+    /**
+     * Gives the stopObservers specific information as a string.
+     * @return a String about the stopObserver's position, id, and number of people.
+     */
     public String getInfo(){
         String stopInfo =
                 "Stop " + this.getID() + System.lineSeparator()
