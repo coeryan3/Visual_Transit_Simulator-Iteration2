@@ -15,13 +15,13 @@ public class UpdateCommand extends MyWebServerCommand {
    *
    * @param session current simulation session
    * @param command the update simulation command content
-   * @param state the state of the simulation session
+   * @param state   the state of the simulation session
    */
   @Override
   public void execute(MyWebServerSession session, JsonObject command,
                       MyWebServerSessionState state) {
     mySim.update();
-    if(mySim.getBusObserved() != null) {
+    if (mySim.getBusObserved() != null) {
       //updates BusObserved data on webserver display
       String busMessage = mySim.getBusObserved().getInfo();
       JsonObject jsonBus = new JsonObject();
@@ -30,7 +30,7 @@ public class UpdateCommand extends MyWebServerCommand {
       session.sendJson(jsonBus);
     }
 
-    if(mySim.getStopObserved() != null) {
+    if (mySim.getStopObserved() != null) {
       //updates stopObserved data on webserver display
       String stopMessage = mySim.getStopObserved().getInfo();
       JsonObject jsonStop = new JsonObject();

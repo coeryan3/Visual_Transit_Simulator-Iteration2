@@ -1,7 +1,11 @@
 package edu.umn.cs.csci3081w.project.webserver;
 
-import edu.umn.cs.csci3081w.project.model.*;
-
+import edu.umn.cs.csci3081w.project.model.Bus;
+import edu.umn.cs.csci3081w.project.model.BusFactory;
+import edu.umn.cs.csci3081w.project.model.RandomBusFactory;
+import edu.umn.cs.csci3081w.project.model.Route;
+import edu.umn.cs.csci3081w.project.model.Stop;
+import edu.umn.cs.csci3081w.project.model.TimeOfDayBusFactory;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,9 +93,9 @@ public class VisualizationSimulator {
    * @param id bus id.
    * @return the bus that is to be observed as a Observer.
    */
-  public Observer listenBus(String id){
+  public Observer listenBus(String id) {
     for (int i = busses.size() - 1; i >= 0; i--) {
-      if(busses.get(i).getBusData().getId().equals(id)) {
+      if (busses.get(i).getBusData().getId().equals(id)) {
         busObserved = new BusObserver(busses.get(i));
       }
     }
@@ -99,19 +103,21 @@ public class VisualizationSimulator {
 
   }
 
-  public Observer getBusObserved(){ return busObserved; }
+  public Observer getBusObserved() {
+    return busObserved;
+  }
 
   /**
    * Find the stop associated with the given id.
    * @param id stop id as a String and not an integer.
    * @return the stop that is to be observed as a Observer.
    */
-  public Observer listenStop(String id){
+  public Observer listenStop(String id) {
     List<Stop> stops;
     for (int i = 0; i < prototypeRoutes.size(); i++) {
       stops = prototypeRoutes.get(i).getStops();
-      for (int j = 0; j < stops.size(); j++){
-        if(Integer.toString(stops.get(j).getId()).equals(id)) {
+      for (int j = 0; j < stops.size(); j++) {
+        if (Integer.toString(stops.get(j).getId()).equals(id)) {
           stopObserved = new StopObserver(stops.get(j));
         }
       }
@@ -119,7 +125,9 @@ public class VisualizationSimulator {
     return stopObserved;
   }
 
-  public Observer getStopObserved(){ return stopObserved; }
+  public Observer getStopObserved() {
+    return stopObserved;
+  }
 
   /**
    * Updates the simulation at each step.
