@@ -21,6 +21,13 @@ public class UpdateCommand extends MyWebServerCommand {
   public void execute(MyWebServerSession session, JsonObject command,
                       MyWebServerSessionState state) {
     mySim.update();
+
+    //updated BusObserved data on webserver display
+    String message = mySim.getBusObserved().getInfo();
+    JsonObject json = new JsonObject();
+    json.addProperty("command", "observeBus");
+    json.addProperty("text", message);
+    session.sendJson(json);
   }
 
 }

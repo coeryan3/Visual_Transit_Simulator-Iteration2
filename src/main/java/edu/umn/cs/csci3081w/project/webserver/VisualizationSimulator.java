@@ -21,9 +21,10 @@ public class VisualizationSimulator {
   private List<Bus> busses;
   private int busId = 1000;
   private boolean paused = false;
+  private Random rand;
   private BusFactory busFactory;
   private LocalDateTime currentDate;
-
+  private Observer busObserved;
 
   /**
    * Constructor for Simulation.
@@ -86,6 +87,18 @@ public class VisualizationSimulator {
     return busFactory.getBus(currentDate, name, outbound, inbound, speed);
   }
 
+  public Observer listenBus(String id){
+    for (int i = busses.size() - 1; i >= 0; i--) {
+      if(busses.get(i).getBusData().getId().equals(id)) {
+        busObserved = new BusObserver(busses.get(i));
+      }
+    }
+    return busObserved;
+
+  }
+
+  public Observer getBusObserved(){ return busObserved; }
+
   /**
    * Updates the simulation at each step.
    */
@@ -131,4 +144,5 @@ public class VisualizationSimulator {
       }
     }
   }
+
 }
