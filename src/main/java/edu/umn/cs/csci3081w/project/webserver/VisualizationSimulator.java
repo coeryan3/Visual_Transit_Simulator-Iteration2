@@ -22,6 +22,7 @@ public class VisualizationSimulator {
   private boolean paused = false;
   private BusFactory busFactory;
   private LocalTime currentTime;
+  private LocalDateTime currentDate;
   private LocalTime fiveAM = LocalTime.of(5, 0);
   private LocalTime eightAM = LocalTime.of(8, 0);
   private LocalTime fourPM = LocalTime.of(16, 0);
@@ -109,6 +110,24 @@ public class VisualizationSimulator {
   }
 
   /**
+   * Create bus either randomly or using the correct time of day strategy,
+   * depending on the day of the month.
+   *
+   * @param name parameter for the name of the bus
+   * @param outbound parameter for outbound route
+   * @param inbound parameter for inbound route
+   * @param speed parameter for bus speed
+   * @return created bus
+   */
+  public Bus createBus(String name, Route outbound, Route inbound, double speed) {
+    if (currentDate.getDayOfMonth() == 1 || currentDate.getDayOfMonth() == 15) {
+      return createRandomBus(name, outbound, inbound, speed);
+    } else {
+      return createTimeOfDayBus(name, outbound, inbound, speed);
+    }
+  }
+
+  /**
    * Updates the simulation at each step.
    */
   public void update() {
@@ -124,8 +143,9 @@ public class VisualizationSimulator {
           Route outbound = prototypeRoutes.get(2 * i);
           Route inbound = prototypeRoutes.get(2 * i + 1);
           currentTime = LocalTime.now();
+          currentDate = LocalDateTime.now();
           busses
-              .add(createRandomBus(String.valueOf(busId),
+              .add(createBus(String.valueOf(busId),
                   outbound.shallowCopy(), inbound.shallowCopy(), 1));
           busId++;
           timeSinceLastBus.set(i, busStartTimings.get(i));
